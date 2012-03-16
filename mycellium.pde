@@ -1,15 +1,17 @@
-int initialNumWorms = 10;
+int initialNumWorms = 40;
 int maxWorms = 100;
 
 Worm[] worms = new Worm[maxWorms];
 
-int scoreToFavour = 255;
+int scoreToFavour = 0;
 
 int numberOfWorms = 0;
 
 int counter = 0;
 
-int branchThreshold = 230 * 4;
+PImage srcImgData;
+
+int branchThreshold = 130;
 
 int lifetime = 100000;
 
@@ -21,8 +23,8 @@ boolean once = true;
 
 
 // WINDOW SETUP
-int windowWidth = 400;
-int windowHeight = 400;
+int windowWidth;
+int windowHeight;
 
 class Worm {
   int id;
@@ -56,7 +58,7 @@ class Worm {
       float ty = y + (cos(angle) * 5 * speed);
       
       // test the source image
-      Score score = getColour(tx, ty, 2);
+      Score score = getColour(tx, ty, srcImgData);
       
       if (score.score < bestScoreSoFar.score) {
         bestAngle = angle;
@@ -74,7 +76,6 @@ class Worm {
         if (numberOfWorms < maxWorms) {
           worms[numberOfWorms] = new Worm(numberOfWorms, x, y, startAngle);
           numberOfWorms++;
-          
           justBranched = 500;
         } else {
           // too many worms
@@ -94,6 +95,7 @@ class Worm {
     vector = bestAngle;
     food--;
     
+    log("Best score = " + Integer.toString(bestScoreSoFar.score));
     
     // favour the dark
     if (bestScoreSoFar.score > 355) {
@@ -101,8 +103,6 @@ class Worm {
     }
     
     if (food == 0) {
-      
-      log("worm died");
       dead = true;
       numberOfWorms--;
     }
@@ -125,14 +125,28 @@ class Score {
   }
 }
 
-Score getColour(float px, float py, int src) {
-  int tr = int(random(255));
-  int tg = int(random(255));
-  int tb = int(random(255));
-  int ta = int(random(255));
-  int ts = tr + tg + tb + ta;
+Score getColour(float px, float py, PImage src) {
   
-  return new Score(tr, tg, tb, ta, ts);
+  
+//  int tr = int(random(255));
+//  int tg = int(random(255));
+//  int tb = int(random(255));
+//  int ta = int(random(255));
+
+  int tx = floor(px);
+  int ty = floor(py);
+  
+  int index = ((tx * 4) + ((ty * 4) * src.width));
+  
+  color c = src.get(tx, ty);
+  
+  int tr = (int)red(c);
+  int tg = (int)green(c);
+  int tb = (int)blue(c);
+  
+  int ts = tr + tg + tb + 1;
+  
+  return new Score(tr, tg, tb, 1, ts);
 }
 
 void initWorms() {
@@ -148,13 +162,19 @@ void initWorms() {
 }
 
 void setup() {
-  size(windowWidth, windowHeight);
   stroke(0);
   background(255, 255, 255);
   smooth();
+  
+  srcImgData = loadImage("photograph_test_01.jpg");
+  windowWidth = srcImgData.width;
+  windowHeight = srcImgData.height;
+  
+  size(windowWidth, windowHeight);
+  
+  srcImgData.loadPixels();
+  
   initWorms();
-  
-  
 }
 
 
@@ -165,11 +185,9 @@ void draw() {
     
     if(w.dead == false) {
       
-      log("worm is alive and is at -  " + Float.toString(w.x) + " " + Float.toString(w.y));
+      //log("worm is alive and is at -  " + Float.toString(w.x) + " " + Float.toString(w.y));
       line(w.x, w.y, w.x + 0.1, w.y + 0.1);
       
-      
-      //arc(w.x, w.y, 0.5, 0.5, PI, 2*PI);
       
       w.x += (cos(w.vector) * w.speed);
       w.y += (sin(w.vector) * w.speed);
@@ -182,8 +200,6 @@ void draw() {
       if (w.y < 0) w.y = windowHeight;
     }
   }
-  
-  
 }
 
 void mousePressed() {
