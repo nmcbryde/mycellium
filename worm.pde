@@ -67,7 +67,7 @@ class Worm {
     vector = bestAngle;
     food--;
     
-    log("Best score = " + Integer.toString(bestScoreSoFar.score));
+    //log("Best score = " + Integer.toString(bestScoreSoFar.score));
     
     // favour the dark
     if (bestScoreSoFar.score > 155) {

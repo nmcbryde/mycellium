@@ -75,8 +75,19 @@ void draw() {
 }
 
 void mousePressed() {
-  pause();
+//  log(Integer.toString(mouseX));
+//  log(Integer.toString(mouseY));
+  
+  Score s = getColour(mouseX, mouseY, srcImgData);
+  log(Integer.toString(s.score));
 }
+
+void keyPressed() {
+  if (key == ' ') {
+    pause();
+  }
+}
+
 
 void log(String message) {
   println(message); 
