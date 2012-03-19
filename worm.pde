@@ -5,7 +5,7 @@ class Worm {
   float vector;
   boolean dead = false;
   int speed = 1;
-  int food = 100;
+  int food = 160;
   
   Worm (int pid, float px, float py, float pv) {
     // initializer
@@ -20,7 +20,7 @@ class Worm {
     float angle = 0;
     float bestAngle = 0;
     
-    Score bestScoreSoFar = new Score(0, 0, 0, 0, 99999999);
+    Score bestScoreSoFar = new Score(0, 0, 0, 0, 0);
     
     for (int i = 0; i < 6; i++) {
       angle = vector - ((random(0, 1) * thirtyDegrees)) + ((random(0, 1) * thirtyDegrees));
@@ -32,7 +32,7 @@ class Worm {
       // test the source image
       Score score = getColour(tx, ty, srcImgData);
       
-      if (score.score < bestScoreSoFar.score) {
+      if (score.score > bestScoreSoFar.score) {
         bestAngle = angle;
         bestScoreSoFar = score;
       }
@@ -70,11 +70,11 @@ class Worm {
     //log("Best score = " + Integer.toString(bestScoreSoFar.score));
     
     // favour the dark
-    if (bestScoreSoFar.score > 155) {
-      food = 200;
+    if (bestScoreSoFar.score < 555) {
+      food += 150;
     }
     
-    if (food == 0) {
+    if (food <= 0) {
       dead = true;
       numberOfWorms--;
     }

@@ -6,10 +6,10 @@ int justBranched = 0;
 boolean paused = false;
 
 // Variables
-int initialNumWorms = 40;
-int maxWorms = 100;
-int scoreToFavour = 0;
-int branchThreshold = 250;
+int initialNumWorms = 100;
+int maxWorms = 1000;
+int scoreToFavour = 500;
+int branchThreshold = 330;
 
 
 // Setup
@@ -39,12 +39,15 @@ void setup() {
   smooth();
   
   srcImgData = loadImage("clint-eastwood.jpg");
+  //srcImgData = loadImage("photograph_test_02.jpg");
   windowWidth = srcImgData.width;
   windowHeight = srcImgData.height;
   
   size(windowWidth, windowHeight);
   
   srcImgData.loadPixels();
+  
+  //image(srcImgData, 0, 0);
   
   initWorms();
 }
@@ -58,6 +61,8 @@ void draw() {
     if(w.dead == false) {
       
       //log("worm is alive and is at -  " + Float.toString(w.x) + " " + Float.toString(w.y));
+      stroke(w.food);
+      strokeWeight(1);
       line(w.x, w.y, w.x + 0.1, w.y + 0.1);
       
       
