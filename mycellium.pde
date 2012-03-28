@@ -38,8 +38,8 @@ void setup() {
   background(255, 255, 255);
   smooth();
   
-  srcImgData = loadImage("clint-eastwood.jpg");
-  //srcImgData = loadImage("photograph_test_02.jpg");
+  //srcImgData = loadImage("clint-eastwood.jpg");
+  srcImgData = loadImage("photograph_test_02.jpg");
   windowWidth = srcImgData.width;
   windowHeight = srcImgData.height;
   
@@ -61,10 +61,20 @@ void draw() {
     if(w.dead == false) {
       
       //log("worm is alive and is at -  " + Float.toString(w.x) + " " + Float.toString(w.y));
-      stroke(w.food);
+      stroke(0, w.food/2);
+      
+      /*
+      0 = low
+      255 = high
+      
+      food = 100 alpha = 50
+      
+      food = 1 alpha should = 0
+      food = 700 alpha should = 255
+      */
+      
       strokeWeight(1);
       line(w.x, w.y, w.x + 0.1, w.y + 0.1);
-      
       
       w.x += (cos(w.vector) * w.speed);
       w.y += (sin(w.vector) * w.speed);
@@ -79,31 +89,8 @@ void draw() {
   }
 }
 
-void mousePressed() {
-//  log(Integer.toString(mouseX));
-//  log(Integer.toString(mouseY));
-  
-  Score s = getColour(mouseX, mouseY, srcImgData);
-  log(Integer.toString(s.score));
-}
-
-void keyPressed() {
-  if (key == ' ') {
-    pause();
-  }
-}
-
-
 void log(String message) {
   println(message); 
 }
 
-void pause() {
-  if ( paused == true ) {
-    paused = false;
-    loop();
-  } else {
-    paused = true;
-    noLoop();
-  }
-}
+

@@ -15,6 +15,10 @@ class Worm {
     vector = pv;
   }
   
+  String toString() {
+    return "("+x+", "+y+")";
+  }
+  
   void updateDirection() {
     float thirtyDegrees = PI / 12;
     float angle = 0;
@@ -22,7 +26,7 @@ class Worm {
     
     Score bestScoreSoFar = new Score(0, 0, 0, 0, 0);
     
-    for (int i = 0; i < 6; i++) {
+    for (int i = 0; i < 10; i++) {
       angle = vector - ((random(0, 1) * thirtyDegrees)) + ((random(0, 1) * thirtyDegrees));
       
       // Calculate a new direction
@@ -70,8 +74,8 @@ class Worm {
     //log("Best score = " + Integer.toString(bestScoreSoFar.score));
     
     // favour the dark
-    if (bestScoreSoFar.score < 555) {
-      food += 150;
+    if (bestScoreSoFar.score < 155) {
+      food += 50;
     }
     
     if (food <= 0) {
