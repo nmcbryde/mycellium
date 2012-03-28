@@ -1,3 +1,7 @@
+import com.nootropic.processing.layers.*;
+
+// Layers
+AppletLayers layers;
 
 // Counters
 int numberOfWorms = 0;
@@ -33,6 +37,15 @@ void initWorms() {
   }
 }
 
+void paint(java.awt.Graphics g) {
+  // This method MUST be present in your sketch for layers to be rendered!
+  if (layers != null) {
+    layers.paint(this);
+  } else {
+    super.paint(g);
+  }
+}
+
 void setup() {
   stroke(0);
   background(255, 255, 255);
@@ -44,6 +57,13 @@ void setup() {
   windowHeight = srcImgData.height;
   
   size(windowWidth, windowHeight);
+  
+  
+  layers = new AppletLayers(this);
+  InterfaceLayer m = new InterfaceLayer(this);
+  layers.addLayer(m);
+  
+  
   
   srcImgData.loadPixels();
   
