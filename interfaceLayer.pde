@@ -52,8 +52,17 @@ class InterfaceLayer extends Layer {
   
   
   void keyPressed() {
-    if (key == ' ') {
-      pause();
+    switch (key) {
+      case(' '):
+        pause();
+        break;
+      case('s'):
+        save("snapshots/output-"+Integer.toString(outputCounter++)+".jpg");
+        break;
+      case('q'):
+        exit();
+        break;
+      default:
     }
   }
   

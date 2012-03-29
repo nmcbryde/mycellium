@@ -19,6 +19,7 @@ int branchThreshold = 330;
 // Setup
 int windowWidth;
 int windowHeight;
+int outputCounter;
 
 // Holders
 Worm[] worms = new Worm[maxWorms];
@@ -50,6 +51,8 @@ void setup() {
   stroke(0);
   background(255, 255, 255);
   smooth();
+  
+  outputCounter = 1;
   
   //srcImgData = loadImage("clint-eastwood.jpg");
   srcImgData = loadImage("photograph_test_02.jpg");
@@ -112,5 +115,3 @@ void draw() {
 void log(String message) {
   println(message); 
 }
-
-
