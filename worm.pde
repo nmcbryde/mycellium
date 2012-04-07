@@ -26,12 +26,12 @@ class Worm {
     
     Score bestScoreSoFar = new Score(0, 0, 0, 0, 0);
     
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < 6; i++) {
       angle = vector - ((random(0, 1) * thirtyDegrees)) + ((random(0, 1) * thirtyDegrees));
       
       // Calculate a new direction
-      float tx = x + (cos(angle) * 5 * speed);
-      float ty = y + (cos(angle) * 5 * speed);
+      float tx = x + (cos(angle) * 10 * speed);
+      float ty = y + (cos(angle) * 10 * speed);
       
       // test the source image
       Score score = getColour(tx, ty, srcImgData);
