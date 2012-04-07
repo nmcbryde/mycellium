@@ -10,37 +10,65 @@ class InterfaceLayer extends Layer {
   void draw() {
   }
   
-  void mousePressed() {    
-    if (paused == false) {
-      pause();
-    }
+  
+  /*
+   * Finds the nearest worm to the cursor
+   * Draws a box 50 pixels each side of the x and y points and loops over the pixels looking for worms. 
+   * If a worm is found it measures it against the last worm found to see if its closer, and if so replaces the previous nearest worm.
+   */
+  Worm findNearestWorm() {
     
-    Worm bestWormSoFar = null;
+    Worm nearestWormSoFar = null;
     
     for (int i = 0; i < numberOfWorms; i++) {
-      log(Integer.toString(i));
       Worm w = worms[i];
       if ( (w.x > mouseX-(boxWidth/2) && w.x < mouseX+(boxWidth/2)) && (w.y > mouseY-(boxWidth/2) && w.y < mouseY+(boxWidth/2)) ) {
-        if (bestWormSoFar == null) {
-          bestWormSoFar = w;
+        if (nearestWormSoFar == null) {
+          nearestWormSoFar = w;
         } else {
-          if (distanceBetween(mouseX, mouseY, w.x, w.y) < distanceBetween(mouseX, mouseY, bestWormSoFar.x, bestWormSoFar.y)) {
-            bestWormSoFar = w;
+          if (distanceBetween(mouseX, mouseY, w.x, w.y) < distanceBetween(mouseX, mouseY, nearestWormSoFar.x, nearestWormSoFar.y)) {
+            nearestWormSoFar = w;
           }
         }
       }
     }
+   
+    return nearestWormSoFar; 
+  }
+  
+  void mousePressed() {
+    if (paused == false) {
+      pause();
+    }
     
-    if (bestWormSoFar != null) {
+    Worm nearestWorm = findNearestWorm();
+    
+    if (nearestWorm != null) {
       background(0, 0);
+      
       c.show();
-      c.log(Float.toString(bestWormSoFar.x) + " " + Float.toString(bestWormSoFar.x));
+      if (nearestWorm.dead) {
+        c.log("The worm is dead");
+      }
+      
+      c.log("X: " + Float.toString(nearestWorm.x) + ", Y: " + Float.toString(nearestWorm.x));
+      
+      c.log("Food " + Integer.toString(nearestWorm.food));
+      
+      Score s = getColour(nearestWorm.x, nearestWorm.y, srcImgData);
+      
+      c.log("Score " + s.score);
       
       noFill();
       stroke(255, 0, 0);
-      ellipse(bestWormSoFar.x, bestWormSoFar.y, 10, 10);
+      ellipse(nearestWorm.x, nearestWorm.y, 10, 10);
       redraw();
+    } else {
+      background(0, 0);
+      c.show();
+      c.log("Score " + getColour(mouseX, mouseY, srcImgData).score);
     }
+    
     
   }
   
@@ -57,6 +85,8 @@ class InterfaceLayer extends Layer {
         break;
       case('s'):
         save("snapshots/output-"+Integer.toString(outputCounter++)+".jpg");
+        break;
+      case('i'):
         break;
       case('q'):
         exit();
@@ -75,9 +105,6 @@ class InterfaceLayer extends Layer {
     } else {
       paused = true;
       noLoop();
-      
-      
-      c.log("test");
     }
   }
   
@@ -85,6 +112,7 @@ class InterfaceLayer extends Layer {
     int topEdge;
     int currentHeight = 0;
     int padding = 20;
+    int opacity = 200;
     
     Console () {
       topEdge = floor(windowHeight-(windowHeight*.2));
@@ -92,14 +120,16 @@ class InterfaceLayer extends Layer {
     
     void show() {
       noStroke();
-      fill(0, 0, 0, 100);
+      fill(0, 0, 0, opacity);
       rect(0, topEdge, windowWidth, windowHeight*.2);
+      currentHeight = 0;
     }
     
     
     void log(String message) {
       fill(255, 255, 255);
       text(message, padding, (topEdge + padding + currentHeight));
+      currentHeight += 20;
     }
   }
 

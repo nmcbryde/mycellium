@@ -13,8 +13,11 @@ boolean paused = false;
 int initialNumWorms = 100;
 int maxWorms = 1000;
 int scoreToFavour = 500;
-int branchThreshold = 330;
+int branchThreshold = 300;
 
+//srcImgData = loadImage("clint-eastwood.jpg");
+//String imgSrc = "photograph_test_02.jpg";
+String imgSrc = "clint-eastwood.jpg";
 
 // Setup
 int windowWidth;
@@ -54,8 +57,8 @@ void setup() {
   
   outputCounter = 1;
   
-  //srcImgData = loadImage("clint-eastwood.jpg");
-  srcImgData = loadImage("photograph_test_02.jpg");
+  
+  srcImgData = loadImage(imgSrc);
   windowWidth = srcImgData.width;
   windowHeight = srcImgData.height;
   

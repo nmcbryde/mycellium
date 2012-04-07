@@ -52,7 +52,7 @@ class Worm {
         if (numberOfWorms < maxWorms) {
           worms[numberOfWorms] = new Worm(numberOfWorms, x, y, startAngle);
           numberOfWorms++;
-          justBranched = 500;
+          justBranched = 350;
         } else {
           // too many worms
           for (int i = 0; i < worms.length; i++) {
@@ -74,8 +74,8 @@ class Worm {
     //log("Best score = " + Integer.toString(bestScoreSoFar.score));
     
     // favour the dark
-    if (bestScoreSoFar.score < 155) {
-      food += 50;
+    if (bestScoreSoFar.score > 555 && food < 255) {
+      food += 2;
     }
     
     if (food <= 0) {
