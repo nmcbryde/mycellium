@@ -87,6 +87,7 @@ class InterfaceLayer extends Layer {
         save("snapshots/output-"+Integer.toString(outputCounter++)+".jpg");
         break;
       case('i'):
+        showBackgroundImage();
         break;
       case('q'):
         exit();
@@ -95,6 +96,14 @@ class InterfaceLayer extends Layer {
     }
   }
   
+  void showBackgroundImage() {
+    if(paused) {
+      pause();
+    } else {
+      pause();
+      image(srcImgData, 0, 0);
+    }
+  }
   
   void pause() {
     if ( paused == true ) {

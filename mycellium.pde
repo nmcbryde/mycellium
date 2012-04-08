@@ -16,8 +16,8 @@ int scoreToFavour = 500;
 int branchThreshold = 300;
 
 //srcImgData = loadImage("clint-eastwood.jpg");
-//String imgSrc = "photograph_test_02.jpg";
-String imgSrc = "clint-eastwood.jpg";
+String imgSrc = "photograph_test_02.jpg";
+//String imgSrc = "clint-eastwood.jpg";
 
 // Setup
 int windowWidth;
@@ -57,24 +57,17 @@ void setup() {
   
   outputCounter = 1;
   
-  
   srcImgData = loadImage(imgSrc);
   windowWidth = srcImgData.width;
   windowHeight = srcImgData.height;
   
   size(windowWidth, windowHeight);
   
-  
   layers = new AppletLayers(this);
   InterfaceLayer m = new InterfaceLayer(this);
   layers.addLayer(m);
   
-  
-  
   srcImgData.loadPixels();
-  
-  //image(srcImgData, 0, 0);
-  
   initWorms();
 }
 
@@ -85,8 +78,6 @@ void draw() {
     Worm w = worms[i];
     
     if(w.dead == false) {
-      
-      //log("worm is alive and is at -  " + Float.toString(w.x) + " " + Float.toString(w.y));
       stroke(0, w.food/2);
       
       /*

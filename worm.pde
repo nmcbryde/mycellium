@@ -30,9 +30,9 @@ class Worm {
       angle = vector - ((random(0, 1) * thirtyDegrees)) + ((random(0, 1) * thirtyDegrees));
       
       // Calculate a new direction
-      float tx = x + (cos(angle) * 10 * speed);
-      float ty = y + (cos(angle) * 10 * speed);
-      
+      float tx = x + (cos(angle) * 3 * speed);
+      float ty = y + (cos(angle) * 3 * speed);
+     
       // test the source image
       Score score = getColour(tx, ty, srcImgData);
       
