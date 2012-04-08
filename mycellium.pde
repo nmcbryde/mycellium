@@ -16,8 +16,8 @@ int scoreToFavour = 500;
 int branchThreshold = 300;
 
 //srcImgData = loadImage("clint-eastwood.jpg");
-String imgSrc = "photograph_test_02.jpg";
-//String imgSrc = "clint-eastwood.jpg";
+//String imgSrc = "photograph_test_02.jpg";
+String imgSrc = "clint-eastwood.jpg";
 
 // Setup
 int windowWidth;
@@ -78,7 +78,7 @@ void draw() {
     Worm w = worms[i];
     
     if(w.dead == false) {
-      stroke(0, w.food/2);
+      stroke(0, (w.food/2));
       
       /*
       0 = low

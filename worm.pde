@@ -19,6 +19,12 @@ class Worm {
     return "("+x+", "+y+")";
   }
   
+  
+  int getScore() {
+    Score score = getColour(x, y, srcImgData);
+    return score.score;
+  }
+  
   void updateDirection() {
     float thirtyDegrees = PI / 12;
     float angle = 0;
@@ -30,8 +36,8 @@ class Worm {
       angle = vector - ((random(0, 1) * thirtyDegrees)) + ((random(0, 1) * thirtyDegrees));
       
       // Calculate a new direction
-      float tx = x + (cos(angle) * 3 * speed);
-      float ty = y + (cos(angle) * 3 * speed);
+      float tx = x + (cos(angle) * 10 * speed);
+      float ty = y + (cos(angle) * 10 * speed);
      
       // test the source image
       Score score = getColour(tx, ty, srcImgData);

@@ -52,8 +52,9 @@ class InterfaceLayer extends Layer {
       }
       
       c.log("X: " + Float.toString(nearestWorm.x) + ", Y: " + Float.toString(nearestWorm.x));
-      
       c.log("Food " + Integer.toString(nearestWorm.food));
+      
+      showDirections(nearestWorm);
       
       Score s = getColour(nearestWorm.x, nearestWorm.y, srcImgData);
       
@@ -103,6 +104,38 @@ class InterfaceLayer extends Layer {
       pause();
       image(srcImgData, 0, 0);
     }
+  }
+  
+  void showDirections(Worm worm) {
+    
+    float thirtyDegrees = PI/12;
+    float angle = 0;
+    float bestAngle = 0;
+    
+    Score bestScoreSoFar = new Score(0, 0, 0, 0, 0);
+    
+    for (int i = 0; i < 6; i++) {
+      angle = worm.vector - ((random(0, 1) * thirtyDegrees)) + ((random(0, 1) * thirtyDegrees));
+      
+      float tx = worm.x + (cos(angle) * 30 * worm.speed);
+      float ty = worm.y + (sin(angle) * 30 * worm.speed);
+      
+      stroke(0);
+      line(worm.x, worm.y, tx, ty);
+      
+      // test the source image
+      Score score = getColour(tx, ty, srcImgData);
+      
+      if (score.score > bestScoreSoFar.score) {
+        bestAngle = angle;
+        bestScoreSoFar = score;
+      }
+    }
+    
+    float tx = worm.x + (cos(bestAngle) * 30 * worm.speed);
+    float ty = worm.y + (sin(bestAngle) * 30 * worm.speed);
+    stroke(255, 0, 0);
+    line(worm.x, worm.y, tx, ty);
   }
   
   void pause() {
