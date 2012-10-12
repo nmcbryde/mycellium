@@ -6,6 +6,7 @@ class Worm {
   boolean dead = false;
   int speed = 1;
   int food = 160;
+  int reach = 10;
   
   Worm (int pid, float px, float py, float pv) {
     // initializer
@@ -25,6 +26,41 @@ class Worm {
     return score.score;
   }
   
+  void showDirections() {
+    float thirtyDegrees = PI/12;
+    float angle = 0;
+    float bestAngle = 0;
+    
+    Score bestScoreSoFar = new Score(0, 0, 0, 0, 0);
+    
+    for (int i = 0; i < 6; i++) {
+      angle = vector - ((random(0, 1) * thirtyDegrees)) + ((random(0, 1) * thirtyDegrees));
+      
+      
+      float tx = x + (cos(angle) * 30 * speed);
+      float ty = y + (sin(angle) * 30 * speed);
+      
+
+      
+      line(x, y, tx, ty);
+      
+      // test the source image
+      Score score = getColour(tx, ty, srcImgData);
+      
+      if (score.score > bestScoreSoFar.score) {
+        bestAngle = angle;
+        bestScoreSoFar = score;
+      }
+    }
+    
+    
+    float tx = x + (cos(bestAngle) * 30 * speed);
+    float ty = y + (sin(bestAngle) * 30 * speed);
+    stroke(255, 0, 0);
+    line(x, y, tx, ty);
+  }
+  
+  
   void updateDirection() {
     float thirtyDegrees = PI / 12;
     float angle = 0;
@@ -36,8 +72,8 @@ class Worm {
       angle = vector - ((random(0, 1) * thirtyDegrees)) + ((random(0, 1) * thirtyDegrees));
       
       // Calculate a new direction
-      float tx = x + (cos(angle) * 10 * speed);
-      float ty = y + (cos(angle) * 10 * speed);
+      float tx = x + (cos(angle) * reach * speed);
+      float ty = y + (cos(angle) * reach * speed);
      
       // test the source image
       Score score = getColour(tx, ty, srcImgData);

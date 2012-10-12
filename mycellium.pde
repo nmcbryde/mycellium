@@ -13,10 +13,11 @@ boolean paused = false;
 int initialNumWorms = 100;
 int maxWorms = 1000;
 int scoreToFavour = 500;
-int branchThreshold = 300;
+int branchThreshold = 600;
 
 //srcImgData = loadImage("clint-eastwood.jpg");
-//String imgSrc = "photograph_test_02.jpg";
+//String imgSrc = "photograph_test_03.jpg";
+//String imgSrc = "text.jpg";
 String imgSrc = "clint-eastwood.jpg";
 
 // Setup
@@ -78,7 +79,7 @@ void draw() {
     Worm w = worms[i];
     
     if(w.dead == false) {
-      stroke(0, (w.food/2));
+      stroke(0, (w.food/2)+(w.getScore()/10));
       
       /*
       0 = low
